@@ -1,0 +1,4 @@
+﻿<Solution>
+  <Project Path="Texnokaktus.ProgOlymp.ContentService.DataAccess\Texnokaktus.ProgOlymp.ContentService.DataAccess.csproj" Type="Classic C#" />
+  <Project Path="Texnokaktus.ProgOlymp.ContentService\Texnokaktus.ProgOlymp.ContentService.csproj" Type="Classic C#" />
+</Solution>
