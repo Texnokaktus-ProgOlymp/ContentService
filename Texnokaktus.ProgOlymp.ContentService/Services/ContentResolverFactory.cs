@@ -9,6 +9,7 @@ public class ContentResolverFactory(IServiceProvider provider) : IContentResolve
         item switch
         {
             GitHubReleaseItem => Create<GitHubReleaseItem>(),
+            S3Item            => Create<S3Item>(),
             _                 => throw new NotSupportedException()
         };
 

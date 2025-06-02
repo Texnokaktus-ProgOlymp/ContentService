@@ -1,7 +1,9 @@
+using Amazon.S3;
 using Microsoft.EntityFrameworkCore;
 using Octokit;
 using Octokit.Internal;
 using Texnokaktus.ProgOlymp.ContentService.DataAccess;
+using Texnokaktus.ProgOlymp.ContentService.DataAccess.Context;
 using Texnokaktus.ProgOlymp.ContentService.DataAccess.Entities;
 using Texnokaktus.ProgOlymp.ContentService.Services;
 using Texnokaktus.ProgOlymp.ContentService.Services.Abstractions;
@@ -13,6 +15,7 @@ builder.Services.AddDataAccess(optionsBuilder => optionsBuilder.UseSqlServer(bui
 
 builder.Services
        .AddScoped<IContentResolver<GitHubReleaseItem>, GitHubReleaseContentResolver>()
+       .AddScoped<IContentResolver<S3Item>, S3ContentResolver>()
        .AddScoped<IContentResolverFactory, ContentResolverFactory>();
 
 builder.Services
@@ -25,6 +28,10 @@ builder.Services
             return new InMemoryCredentialStore(credentials);
         })
        .AddScoped<GitHubClient>(provider => ActivatorUtilities.CreateInstance<GitHubClient>(provider, new ProductHeaderValue("ContentService")));
+
+var awsOptions = builder.Configuration.GetAWSOptions("S3");
+builder.Services.AddDefaultAWSOptions(awsOptions);
+builder.Services.AddAWSService<IAmazonS3>();
 
 builder.Services.AddOpenApi();
 
