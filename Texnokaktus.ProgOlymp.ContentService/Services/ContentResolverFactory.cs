@@ -11,7 +11,7 @@ public class ContentResolverFactory(IServiceProvider provider) : IContentResolve
             GitHubReleaseItem            => Create<GitHubReleaseItem>(),
             S3Item                       => Create<S3Item>(),
             YandexContestProblemTestItem => Create<YandexContestProblemTestItem>(),
-            _                            => throw new NotSupportedException(),
+            _                            => throw new NotSupportedException()
         };
 
     private IContentResolver<TContentResolver> Create<TContentResolver>() where TContentResolver : ContentItem =>

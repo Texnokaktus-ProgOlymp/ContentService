@@ -13,7 +13,7 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
         {
             builder.HasKey(contentItem => contentItem.Id);
             builder.Property(contentItem => contentItem.Id).ValueGeneratedOnAdd();
-            
+
             builder.HasIndex(contentItem => new
                     {
                         contentItem.ContestName,

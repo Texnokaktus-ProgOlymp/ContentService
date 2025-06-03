@@ -16,7 +16,7 @@ public class ContentItemQueryHandler(AppDbContext context, IContentResolverFacto
                                                                 && item.ShortName == query.ShortName,
                                                            cancellationToken) is not { } contentItem)
             return TypedResults.NotFound();
-        
+
         var resolver = contentResolverFactory.GetFor(contentItem);
 
         if (await resolver.ResolveAsync(contentItem, cancellationToken) is not { } data)
