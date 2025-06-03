@@ -20,7 +20,12 @@ builder.Services
        .AddScoped<IContentResolver<S3Item>, S3ContentResolver>()
        .AddScoped<IContentResolver<YandexContestProblemTestItem>, YandexContestProblemTestResolver>()
        .AddScoped<IContentResolverFactory, ContentResolverFactory>()
-       .AddScoped<IContentItemQueryHandler, ContentItemQueryHandler>();
+       .AddScoped<IContentItemQueryHandler, ContentItemQueryHandler>()
+       .AddScoped<IContestContentQueryHandler, ContentQueryHandler>()
+       .AddScoped<IContestStageContentQueryHandler, ContentQueryHandler>()
+       .AddScoped<IContestProblemContentQueryHandler, ContentQueryHandler>();
+
+builder.Services.AddHttpContextAccessor();
 
 builder.Services
        .AddYandexContestClient()

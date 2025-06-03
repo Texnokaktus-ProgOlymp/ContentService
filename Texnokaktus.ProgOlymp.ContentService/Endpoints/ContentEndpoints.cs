@@ -15,7 +15,8 @@ public static class ContentEndpoints
                                                                                     null,
                                                                                     null,
                                                                                     shortName),
-                                                                                cancellationToken));
+                                                                                cancellationToken))
+           .WithName("GetContestContentItem");
 
         app.MapGet("contests/{contestName}/{contestStage}/content/{shortName}",
                    (string contestName,
@@ -26,7 +27,8 @@ public static class ContentEndpoints
                                                                                     contestStage,
                                                                                     null,
                                                                                     shortName),
-                                                                                cancellationToken));
+                                                                                cancellationToken))
+           .WithName("GetContestStageContentItem");
 
         app.MapGet("contests/{contestName}/{contestStage}/problems/{problemAlias}/content/{shortName}",
                    (string contestName,
@@ -38,13 +40,38 @@ public static class ContentEndpoints
                                                                                     contestStage,
                                                                                     problemAlias,
                                                                                     shortName),
-                                                                                cancellationToken));
+                                                                                cancellationToken))
+           .WithName("GetContestProblemContentItem");
 
         return app;
     }
 
     public static IEndpointRouteBuilder MapContentApiEndpoints(this IEndpointRouteBuilder app)
     {
+        app.MapGet("contests/{contestName}/content",
+                   (string contestName,
+                    IContestContentQueryHandler handler,
+                    CancellationToken cancellationToken) => handler.HandleAsync(new(contestName),
+                                                                                cancellationToken));
+
+        app.MapGet("contests/{contestName}/{contestStage}/content",
+                   (string contestName,
+                    ContestStage contestStage,
+                    IContestStageContentQueryHandler handler,
+                    CancellationToken cancellationToken) => handler.HandleAsync(new(contestName,
+                                                                                    contestStage),
+                                                                                cancellationToken));
+
+        app.MapGet("contests/{contestName}/{contestStage}/problems/{problemAlias}/content",
+                   (string contestName,
+                    ContestStage contestStage,
+                    string problemAlias,
+                    IContestProblemContentQueryHandler handler,
+                    CancellationToken cancellationToken) => handler.HandleAsync(new(contestName,
+                                                                                    contestStage,
+                                                                                    problemAlias),
+                                                                                cancellationToken));
+
         return app;
     }
 }
