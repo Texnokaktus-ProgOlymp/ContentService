@@ -16,7 +16,8 @@ public static class ContentEndpoints
                                                                                     null,
                                                                                     shortName),
                                                                                 cancellationToken))
-           .WithName("GetContestContentItem");
+           .WithName("GetContestContentItem")
+           .Produces(StatusCodes.Status200OK);
 
         app.MapGet("contests/{contestName}/{contestStage}/content/{shortName}",
                    (string contestName,
@@ -28,7 +29,8 @@ public static class ContentEndpoints
                                                                                     null,
                                                                                     shortName),
                                                                                 cancellationToken))
-           .WithName("GetContestStageContentItem");
+           .WithName("GetContestStageContentItem")
+           .Produces(StatusCodes.Status200OK);
 
         app.MapGet("contests/{contestName}/{contestStage}/problems/{problemAlias}/content/{shortName}",
                    (string contestName,
@@ -41,7 +43,8 @@ public static class ContentEndpoints
                                                                                     problemAlias,
                                                                                     shortName),
                                                                                 cancellationToken))
-           .WithName("GetContestProblemContentItem");
+           .WithName("GetContestProblemContentItem")
+           .Produces(StatusCodes.Status200OK);
 
         return app;
     }
