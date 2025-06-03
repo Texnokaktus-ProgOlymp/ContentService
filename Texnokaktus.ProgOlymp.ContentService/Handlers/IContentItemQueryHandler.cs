@@ -3,7 +3,4 @@ using Texnokaktus.ProgOlymp.ContentService.Queries;
 
 namespace Texnokaktus.ProgOlymp.ContentService.Handlers;
 
-public interface IContentItemQueryHandler
-{
-    Task<Results<FileStreamHttpResult, NotFound>> HandleAsync(ContentQuery query, CancellationToken cancellationToken = default);
-}
+public interface IContentItemQueryHandler : IQueryHandler<ContentQuery, Results<FileStreamHttpResult, NotFound>>;
