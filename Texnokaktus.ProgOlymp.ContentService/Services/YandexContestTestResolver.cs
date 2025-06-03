@@ -33,7 +33,7 @@ public class YandexContestProblemTestResolver(ContestClient client) : IContentRe
                                                                    (_, pair) => pair)
                                           ?? [])
             {
-                await using var entryStream = archive.CreateEntry(fileName, CompressionLevel.Optimal).Open();
+                await using var entryStream = archive.CreateEntry(Path.GetFileName(fileName)).Open();
                 using var httpClient = new HttpClient();
                 await using var fileStream = await httpClient.GetStreamAsync(file.Url, cancellationToken);
                 await fileStream.CopyToAsync(entryStream, cancellationToken);
