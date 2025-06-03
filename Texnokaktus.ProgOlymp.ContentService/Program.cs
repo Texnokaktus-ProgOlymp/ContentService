@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
 using Octokit;
 using Octokit.Internal;
+using Serilog;
 using StackExchange.Redis;
 using Texnokaktus.ProgOlymp.ContentService.DataAccess;
 using Texnokaktus.ProgOlymp.ContentService.DataAccess.Entities;
@@ -55,6 +56,8 @@ builder.Services
 var awsOptions = builder.Configuration.GetAWSOptions("S3");
 builder.Services.AddDefaultAWSOptions(awsOptions);
 builder.Services.AddAWSService<IAmazonS3>();
+
+builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
 
 builder.Services.AddOpenApi();
 
