@@ -1,7 +1,10 @@
+using System.Reflection;
 using Amazon.S3;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
 using Octokit;
 using Octokit.Internal;
+using StackExchange.Redis;
 using Texnokaktus.ProgOlymp.ContentService.DataAccess;
 using Texnokaktus.ProgOlymp.ContentService.DataAccess.Entities;
 using Texnokaktus.ProgOlymp.ContentService.Endpoints;
@@ -24,6 +27,13 @@ builder.Services
        .AddScoped<IContestContentQueryHandler, ContentQueryHandler>()
        .AddScoped<IContestStageContentQueryHandler, ContentQueryHandler>()
        .AddScoped<IContestProblemContentQueryHandler, ContentQueryHandler>();
+
+var connectionMultiplexer = await ConnectionMultiplexer.ConnectAsync(builder.Configuration.GetConnectionString("DefaultRedis")!);
+builder.Services.AddSingleton<IConnectionMultiplexer>(connectionMultiplexer);
+
+builder.Services
+       .AddDataProtection(options => options.ApplicationDiscriminator = Assembly.GetEntryAssembly()?.GetName().Name)
+       .PersistKeysToStackExchangeRedis(connectionMultiplexer);
 
 builder.Services.AddHttpContextAccessor();
 
