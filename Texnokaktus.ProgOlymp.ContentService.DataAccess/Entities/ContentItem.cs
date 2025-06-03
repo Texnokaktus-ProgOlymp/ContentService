@@ -6,4 +6,5 @@ public abstract record ContentItem(int Id,
                                    string? ProblemAlias,
                                    string ShortName,
                                    string Description,
+                                   string? OverrideFileName,
                                    string? OverrideContentType);

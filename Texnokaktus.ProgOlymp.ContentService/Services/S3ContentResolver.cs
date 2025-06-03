@@ -15,7 +15,7 @@ public class S3ContentResolver(IAmazonS3 s3) : IContentResolver<S3Item>
             var response = await s3.GetObjectAsync(contentItem.BucketName, contentItem.ObjectKey, cancellationToken);
 
             return new(response.ResponseStream,
-                       response.Key,
+                       contentItem.OverrideFileName ?? response.Key,
                        contentItem.OverrideContentType ?? response.Headers.ContentType,
                        response.LastModified is not null
                            ? new(response.LastModified.Value)

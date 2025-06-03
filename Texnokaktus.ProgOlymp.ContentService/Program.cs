@@ -8,6 +8,7 @@ using Texnokaktus.ProgOlymp.ContentService.Endpoints;
 using Texnokaktus.ProgOlymp.ContentService.Handlers;
 using Texnokaktus.ProgOlymp.ContentService.Services;
 using Texnokaktus.ProgOlymp.ContentService.Services.Abstractions;
+using YandexContestClient;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,8 +18,13 @@ builder.Services.AddDataAccess(optionsBuilder => optionsBuilder.UseSqlServer(bui
 builder.Services
        .AddScoped<IContentResolver<GitHubReleaseItem>, GitHubReleaseContentResolver>()
        .AddScoped<IContentResolver<S3Item>, S3ContentResolver>()
+       .AddScoped<IContentResolver<YandexContestProblemTestItem>, YandexContestProblemTestResolver>()
        .AddScoped<IContentResolverFactory, ContentResolverFactory>()
        .AddScoped<IContentItemQueryHandler, ContentItemQueryHandler>();
+
+builder.Services
+       .AddYandexContestClient()
+       .AddYandexContestAuthentication<TokenProvider>();
 
 builder.Services
        .AddScoped<ICredentialStore>(_ =>

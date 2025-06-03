@@ -8,9 +8,10 @@ public class ContentResolverFactory(IServiceProvider provider) : IContentResolve
     public IContentResolver GetFor(ContentItem item) =>
         item switch
         {
-            GitHubReleaseItem => Create<GitHubReleaseItem>(),
-            S3Item            => Create<S3Item>(),
-            _                 => throw new NotSupportedException()
+            GitHubReleaseItem            => Create<GitHubReleaseItem>(),
+            S3Item                       => Create<S3Item>(),
+            YandexContestProblemTestItem => Create<YandexContestProblemTestItem>(),
+            _                            => throw new NotSupportedException(),
         };
 
     private IContentResolver<TContentResolver> Create<TContentResolver>() where TContentResolver : ContentItem =>

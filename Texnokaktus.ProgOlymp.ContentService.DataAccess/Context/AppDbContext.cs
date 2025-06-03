@@ -26,5 +26,6 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
 
         modelBuilder.Entity<GitHubReleaseItem>().HasBaseType<ContentItem>();
         modelBuilder.Entity<S3Item>().HasBaseType<ContentItem>();
+        modelBuilder.Entity<YandexContestProblemTestItem>().HasBaseType<ContentItem>();
     }
 }

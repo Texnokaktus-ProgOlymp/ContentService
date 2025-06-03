@@ -20,7 +20,7 @@ public class GitHubReleaseContentResolver(GitHubClient gitHubClient) : IContentR
                                                                  cancellationToken);
 
         return new(response.Body,
-                   contentItem.AssetName,
+                   contentItem.OverrideFileName ?? contentItem.AssetName,
                    contentItem.OverrideContentType ?? releaseAsset.ContentType,
                    releaseAsset.UpdatedAt);
     }
