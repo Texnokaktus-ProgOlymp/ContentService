@@ -5,4 +5,5 @@ public abstract record ContentItem(int Id,
                                    ContestStage? ContestStage,
                                    string? ProblemAlias,
                                    string ShortName,
+                                   string Description,
                                    string? OverrideContentType);
