@@ -7,9 +7,9 @@ namespace Texnokaktus.ProgOlymp.ContentService.Services;
 
 public class S3ContentResolver(IAmazonS3 s3) : IContentResolver<S3Item>
 {
-    public async Task<ContentItemData?> ResolveAsync(S3Item contentItem)
+    public async Task<ContentItemData?> ResolveAsync(S3Item contentItem, CancellationToken cancellationToken = default)
     {
-        var response = await s3.GetObjectAsync(contentItem.BucketName, contentItem.ObjectKey);
+        var response = await s3.GetObjectAsync(contentItem.BucketName, contentItem.ObjectKey, cancellationToken);
 
         return new(response.ResponseStream,
                    response.Key,

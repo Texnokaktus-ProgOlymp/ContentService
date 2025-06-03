@@ -19,7 +19,7 @@ public class ContentItemQueryHandler(AppDbContext context, IContentResolverFacto
         
         var resolver = contentResolverFactory.GetFor(contentItem);
 
-        if (await resolver.ResolveAsync(contentItem) is not { } data)
+        if (await resolver.ResolveAsync(contentItem, cancellationToken) is not { } data)
             return TypedResults.NotFound();
 
         return TypedResults.File(data.Content, data.ContentType, data.FileName, data.LastModified);

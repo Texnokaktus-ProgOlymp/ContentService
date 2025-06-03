@@ -7,7 +7,7 @@ namespace Texnokaktus.ProgOlymp.ContentService.Services;
 
 public class GitHubReleaseContentResolver(GitHubClient gitHubClient) : IContentResolver<GitHubReleaseItem>
 {
-    public async Task<ContentItemData?> ResolveAsync(GitHubReleaseItem contentItem)
+    public async Task<ContentItemData?> ResolveAsync(GitHubReleaseItem contentItem, CancellationToken cancellationToken = default)
     {
         var release = await gitHubClient.Repository.Release.GetLatest(contentItem.OwnerName, contentItem.RepositoryName);
 
@@ -16,7 +16,8 @@ public class GitHubReleaseContentResolver(GitHubClient gitHubClient) : IContentR
 
         var response = await gitHubClient.Connection.Get<Stream>(new(releaseAsset.Url),
                                                                  new Dictionary<string, string>(),
-                                                                 "application/octet-stream");
+                                                                 "application/octet-stream",
+                                                                 cancellationToken);
 
         return new(response.Body,
                    contentItem.AssetName,
