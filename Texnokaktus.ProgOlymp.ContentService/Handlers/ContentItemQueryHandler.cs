@@ -1,11 +1,12 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using Texnokaktus.ProgOlymp.ContentService.DataAccess.Context;
+using Texnokaktus.ProgOlymp.ContentService.Queries;
 using Texnokaktus.ProgOlymp.ContentService.Services.Abstractions;
 
 namespace Texnokaktus.ProgOlymp.ContentService.Handlers;
 
-public class ContentQueryHandler(AppDbContext context, IContentResolverFactory contentResolverFactory) : IContentQueryHandler
+public class ContentItemQueryHandler(AppDbContext context, IContentResolverFactory contentResolverFactory) : IContentItemQueryHandler
 {
     public async Task<Results<FileStreamHttpResult, NotFound>> HandleAsync(ContentQuery query, CancellationToken cancellationToken = default)
     {

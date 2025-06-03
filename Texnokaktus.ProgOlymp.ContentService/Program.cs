@@ -4,6 +4,7 @@ using Octokit;
 using Octokit.Internal;
 using Texnokaktus.ProgOlymp.ContentService.DataAccess;
 using Texnokaktus.ProgOlymp.ContentService.DataAccess.Entities;
+using Texnokaktus.ProgOlymp.ContentService.Endpoints;
 using Texnokaktus.ProgOlymp.ContentService.Handlers;
 using Texnokaktus.ProgOlymp.ContentService.Services;
 using Texnokaktus.ProgOlymp.ContentService.Services.Abstractions;
@@ -17,7 +18,7 @@ builder.Services
        .AddScoped<IContentResolver<GitHubReleaseItem>, GitHubReleaseContentResolver>()
        .AddScoped<IContentResolver<S3Item>, S3ContentResolver>()
        .AddScoped<IContentResolverFactory, ContentResolverFactory>()
-       .AddScoped<IContentQueryHandler, ContentQueryHandler>();
+       .AddScoped<IContentItemQueryHandler, ContentItemQueryHandler>();
 
 builder.Services
        .AddScoped<ICredentialStore>(_ =>
@@ -43,8 +44,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.MapGet("contests/{contestName}/content/{shortName}", (string contestName, string shortName, IContentQueryHandler handler, CancellationToken cancellationToken) => handler.HandleAsync(new(contestName, null, null, shortName), cancellationToken));
-app.MapGet("contests/{contestName}/{contestStage}/content/{shortName}", (string contestName, ContestStage contestStage, string shortName, IContentQueryHandler handler, CancellationToken cancellationToken) => handler.HandleAsync(new(contestName, contestStage, null, shortName), cancellationToken));
-app.MapGet("contests/{contestName}/{contestStage}/problems/{problemAlias}/content/{shortName}", (string contestName, ContestStage contestStage, string problemAlias, string shortName, IContentQueryHandler handler, CancellationToken cancellationToken) => handler.HandleAsync(new(contestName, contestStage, problemAlias, shortName), cancellationToken));
+app.MapContentEndpoints();
+app.MapGroup("api").MapContentApiEndpoints();
 
 await app.RunAsync();
