@@ -1,14 +1,9 @@
-using Microsoft.Kiota.Abstractions.Authentication;
+using YandexContestClient.Authentication;
+
 namespace Texnokaktus.ProgOlymp.ContentService.Services;
 
-public class TokenProvider : IAccessTokenProvider
+public class TokenProvider : AccessTokenProviderBase
 {
-    public Task<string> GetAuthorizationTokenAsync(Uri uri,
-                                                   Dictionary<string, object>? additionalAuthenticationContext = null,
-                                                   CancellationToken cancellationToken = default) =>
-        Task.FromResult(AllowedHostsValidator.IsUrlHostValid(uri)
-                            ? Environment.GetEnvironmentVariable("YANDEX_CONTEST_TOKEN") ?? throw new("No access token")
-                            : string.Empty);
-
-    public AllowedHostsValidator AllowedHostsValidator => new(["api.contest.yandex.net"]);
+    protected override Task<string> GetTokenAsync(CancellationToken cancellationToken = default) =>
+        Task.FromResult(Environment.GetEnvironmentVariable("YANDEX_CONTEST_TOKEN") ?? throw new("No access token"));
 }
