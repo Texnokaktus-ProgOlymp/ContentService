@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
 using Octokit;
 using Octokit.Internal;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Trace;
 using Serilog;
 using StackExchange.Redis;
 using Texnokaktus.ProgOlymp.ContentService.DataAccess;
@@ -12,6 +14,7 @@ using Texnokaktus.ProgOlymp.ContentService.Endpoints;
 using Texnokaktus.ProgOlymp.ContentService.Handlers;
 using Texnokaktus.ProgOlymp.ContentService.Services;
 using Texnokaktus.ProgOlymp.ContentService.Services.Abstractions;
+using Texnokaktus.ProgOlymp.OpenTelemetry;
 using YandexContestClient;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -59,9 +62,16 @@ builder.Services.AddAWSService<IAmazonS3>();
 
 builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
 
+builder.Services.AddTexnokaktusOpenTelemetry(builder.Configuration,
+                                             "ContentService",
+                                             tracerProviderBuilder => tracerProviderBuilder.AddAWSInstrumentation(),
+                                             meterProviderBuilder => meterProviderBuilder.AddAWSInstrumentation());
+
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
+
+app.UseOpenTelemetryPrometheusScrapingEndpoint();
 
 if (app.Environment.IsDevelopment())
 {
