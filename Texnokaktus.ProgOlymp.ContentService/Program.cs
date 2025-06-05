@@ -60,7 +60,8 @@ var awsOptions = builder.Configuration.GetAWSOptions("S3");
 builder.Services.AddDefaultAWSOptions(awsOptions);
 builder.Services.AddAWSService<IAmazonS3>();
 
-builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
+builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration)
+                                                                 .AddOpenTelemetrySupport(builder.Configuration));
 
 builder.Services.AddTexnokaktusOpenTelemetry(builder.Configuration,
                                              "ContentService",
@@ -70,8 +71,6 @@ builder.Services.AddTexnokaktusOpenTelemetry(builder.Configuration,
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
-
-app.UseOpenTelemetryPrometheusScrapingEndpoint();
 
 if (app.Environment.IsDevelopment())
 {
