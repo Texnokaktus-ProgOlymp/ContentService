@@ -4,14 +4,14 @@ using Texnokaktus.ProgOlymp.ContentService.DataAccess.Context;
 using Texnokaktus.ProgOlymp.ContentService.DataAccess.Entities;
 using Texnokaktus.ProgOlymp.ContentService.Models;
 using Texnokaktus.ProgOlymp.ContentService.Queries;
+using Texnokaktus.ProgOlymp.ContentService.Services.Abstractions;
 
 namespace Texnokaktus.ProgOlymp.ContentService.Handlers;
 
 internal class ContentQueryHandler(AppDbContext context,
-                                   LinkGenerator linkGenerator,
-                                   IHttpContextAccessor httpContextAccessor) : IContestContentQueryHandler,
-                                                                               IContestStageContentQueryHandler,
-                                                                               IContestProblemContentQueryHandler
+                                   IContentLinkGenerator contentLinkGenerator) : IContestContentQueryHandler,
+                                                                                 IContestStageContentQueryHandler,
+                                                                                 IContestProblemContentQueryHandler
 {
     public Task<ContestContentItems> HandleAsync(ContestContentQuery query, CancellationToken cancellationToken = default) =>
         HandleAsync(contentItem => contentItem.ContestName == query.ContestName,
@@ -90,5 +90,5 @@ internal class ContentQueryHandler(AppDbContext context,
 
     private ContentItemModel MapToContentItemModel(ContentItem contentItem, string routeName, Func<ContentItem, RouteValueDictionary> linkDataProvider) =>
         new(contentItem.Description,
-            linkGenerator.GetPathByRouteValues(httpContextAccessor.HttpContext!, routeName, linkDataProvider.Invoke(contentItem)));
+            contentLinkGenerator.GetPath(routeName, linkDataProvider.Invoke(contentItem)));
 }
