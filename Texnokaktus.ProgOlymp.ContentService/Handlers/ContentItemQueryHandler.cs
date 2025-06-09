@@ -6,7 +6,7 @@ using Texnokaktus.ProgOlymp.ContentService.Services.Abstractions;
 
 namespace Texnokaktus.ProgOlymp.ContentService.Handlers;
 
-public class ContentItemQueryHandler(AppDbContext context, IContentResolverFactory contentResolverFactory) : IContentItemQueryHandler
+internal class ContentItemQueryHandler(AppDbContext context, IContentResolverFactory contentResolverFactory) : IContentItemQueryHandler
 {
     public async Task<Results<FileStreamHttpResult, NotFound>> HandleAsync(ContentQuery query, CancellationToken cancellationToken = default)
     {

@@ -5,7 +5,7 @@ using Texnokaktus.ProgOlymp.ContentService.Services.Abstractions;
 
 namespace Texnokaktus.ProgOlymp.ContentService.Services;
 
-public class GitHubReleaseContentResolver(GitHubClient gitHubClient) : IContentResolver<GitHubReleaseItem>
+internal class GitHubReleaseContentResolver(GitHubClient gitHubClient) : IContentResolver<GitHubReleaseItem>
 {
     public async Task<ContentItemData?> ResolveAsync(GitHubReleaseItem contentItem, CancellationToken cancellationToken = default)
     {

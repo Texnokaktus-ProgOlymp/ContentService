@@ -7,7 +7,7 @@ using YandexContestClient.Client.Models;
 
 namespace Texnokaktus.ProgOlymp.ContentService.Services;
 
-public class YandexContestProblemTestResolver(ContestClient client) : IContentResolver<YandexContestProblemTestItem>
+internal class YandexContestProblemTestResolver(ContestClient client) : IContentResolver<YandexContestProblemTestItem>
 {
     public async Task<ContentItemData?> ResolveAsync(YandexContestProblemTestItem contentItem, CancellationToken cancellationToken = default)
     {

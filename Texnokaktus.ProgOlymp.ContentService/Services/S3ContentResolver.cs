@@ -6,7 +6,7 @@ using Texnokaktus.ProgOlymp.ContentService.Services.Abstractions;
 
 namespace Texnokaktus.ProgOlymp.ContentService.Services;
 
-public class S3ContentResolver(IAmazonS3 s3) : IContentResolver<S3Item>
+internal class S3ContentResolver(IAmazonS3 s3) : IContentResolver<S3Item>
 {
     public async Task<ContentItemData?> ResolveAsync(S3Item contentItem, CancellationToken cancellationToken = default)
     {

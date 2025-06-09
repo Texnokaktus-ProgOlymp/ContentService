@@ -3,7 +3,7 @@ using Texnokaktus.ProgOlymp.ContentService.Services.Abstractions;
 
 namespace Texnokaktus.ProgOlymp.ContentService.Services;
 
-public class ContentResolverFactory(IServiceProvider provider) : IContentResolverFactory
+internal class ContentResolverFactory(IServiceProvider provider) : IContentResolverFactory
 {
     public IContentResolver GetFor(ContentItem item) =>
         item switch

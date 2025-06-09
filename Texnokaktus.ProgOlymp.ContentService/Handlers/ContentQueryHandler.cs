@@ -7,11 +7,11 @@ using Texnokaktus.ProgOlymp.ContentService.Queries;
 
 namespace Texnokaktus.ProgOlymp.ContentService.Handlers;
 
-public class ContentQueryHandler(AppDbContext context,
-                                 LinkGenerator linkGenerator,
-                                 IHttpContextAccessor httpContextAccessor) : IContestContentQueryHandler,
-                                                                             IContestStageContentQueryHandler,
-                                                                             IContestProblemContentQueryHandler
+internal class ContentQueryHandler(AppDbContext context,
+                                   LinkGenerator linkGenerator,
+                                   IHttpContextAccessor httpContextAccessor) : IContestContentQueryHandler,
+                                                                               IContestStageContentQueryHandler,
+                                                                               IContestProblemContentQueryHandler
 {
     public Task<ContestContentItems> HandleAsync(ContestContentQuery query, CancellationToken cancellationToken = default) =>
         HandleAsync(contentItem => contentItem.ContestName == query.ContestName,
