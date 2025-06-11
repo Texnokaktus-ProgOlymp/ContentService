@@ -28,6 +28,7 @@ builder.Services
        .AddScoped<IContentResolver<YandexContestProblemTestItem>, YandexContestProblemTestResolver>()
        .AddScoped<IContentResolverFactory, ContentResolverFactory>()
        .AddScoped<IContentItemQueryHandler, ContentItemQueryHandler>()
+       .AddScoped<IContentLinkGenerator, ContentLinkGenerator>()
        .AddScoped<IContestContentQueryHandler, ContentQueryHandler>()
        .AddScoped<IContestStageContentQueryHandler, ContentQueryHandler>()
        .AddScoped<IContestProblemContentQueryHandler, ContentQueryHandler>();

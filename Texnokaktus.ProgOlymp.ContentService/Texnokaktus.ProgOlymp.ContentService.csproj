@@ -8,6 +8,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <InternalsVisibleTo Include="Texnokaktus.ProgOlymp.ContentService.Tests" />
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="4.0.1" />
         <PackageReference Include="AWSSDK.S3" Version="4.0.1.3" />
         <PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="9.0.5" />

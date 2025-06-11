@@ -1,4 +1,7 @@
 ﻿<Solution>
+  <Folder Name="/Tests/">
+    <Project Path="Texnokaktus.ProgOlymp.ContentService.Tests\Texnokaktus.ProgOlymp.ContentService.Tests.csproj" Type="Classic C#" />
+  </Folder>
   <Project Path="Texnokaktus.ProgOlymp.ContentService.DataAccess\Texnokaktus.ProgOlymp.ContentService.DataAccess.csproj" Type="Classic C#" />
   <Project Path="Texnokaktus.ProgOlymp.ContentService\Texnokaktus.ProgOlymp.ContentService.csproj" Type="Classic C#" />
 </Solution>
